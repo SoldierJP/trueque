@@ -1,0 +1,19 @@
+FROM node:20-alpine
+WORKDIR /app
+
+# Copiar archivos de dependencias
+COPY package*.json ./
+
+# Instalar dependencias
+RUN npm ci --only=production
+
+# Copiar código fuente
+COPY . .
+
+# Crear directorio para uploads
+RUN mkdir -p /app/src/uploads
+
+EXPOSE 3000
+
+# Usar nodemon en desarrollo o node en producción
+CMD ["node", "src/index.js"]
